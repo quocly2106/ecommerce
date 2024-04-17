@@ -42,6 +42,7 @@ public class LoginController {
         try {
             if(result.hasErrors()){
                 model.addAttribute("adminDto", adminDto);
+                result.toString();
                 return "register";
             }
             String username = adminDto.getUsername();
@@ -49,11 +50,20 @@ public class LoginController {
             if(admin != null){
                 model.addAttribute("adminDto", adminDto);
                 redirectAttributes.addFlashAttribute("message","Your email has been registered!");
+                System.out.println("admin not null");
                 return "register";
             }
-            adminService.save(adminDto);
-            model.addAttribute("adminDto", adminDto);
-            redirectAttributes.addFlashAttribute("message", "Register successfully!");
+            if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+                adminService.save(adminDto);
+                System.out.println("success");
+                model.addAttribute("adminDto", adminDto);
+                redirectAttributes.addFlashAttribute("message", "Register successfully!");
+            }else {
+                model.addAttribute("adminDto", adminDto);
+                redirectAttributes.addFlashAttribute("message","Password ís not same!");
+                System.out.println("password not same");
+                return "redirect:/register";
+            }
 
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message", "Can not register because arror server!");
