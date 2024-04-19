@@ -4,9 +4,12 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class AdminConfiguration {
+
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -38,10 +42,10 @@ public class AdminConfiguration {
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         http
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(author ->
+                        author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/login", "/register", "/forgot-password").permitAll()
-                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 )
@@ -49,7 +53,7 @@ public class AdminConfiguration {
                         formLogin
                                 .loginPage("/login")
                                 .loginProcessingUrl("/do-login")
-                                .defaultSuccessUrl("/index", true)
+                                .defaultSuccessUrl("/admin/index")
                                 .permitAll()
                 )
                 .logout(logout ->
@@ -60,7 +64,12 @@ public class AdminConfiguration {
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 )
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                );
+
         return http.build();
     }
+
 }

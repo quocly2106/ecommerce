@@ -3,8 +3,10 @@ package com.ecommerce.admin.controller;
 import com.ecommerce.library.dto.AdminDto;
 import com.ecommerce.library.model.Admin;
 import com.ecommerce.library.service.impl.AdminServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
     @Autowired
     private AdminServiceImpl adminService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @GetMapping("/login")
     public String loginForm(){
         return "login";
@@ -38,8 +43,9 @@ public class LoginController {
     public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
                               BindingResult result,
                               Model model,
-                              RedirectAttributes redirectAttributes){
+                              HttpSession session){
         try {
+            session.removeAttribute("message");
             if(result.hasErrors()){
                 model.addAttribute("adminDto", adminDto);
                 result.toString();
@@ -49,24 +55,27 @@ public class LoginController {
             Admin admin = adminService.findByUsername(username);
             if(admin != null){
                 model.addAttribute("adminDto", adminDto);
-                redirectAttributes.addFlashAttribute("message","Your email has been registered!");
                 System.out.println("admin not null");
+                session.setAttribute("message","Your email has been registered!");
                 return "register";
             }
             if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+                adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
                 adminService.save(adminDto);
                 System.out.println("success");
+                session.setAttribute("message","Register successfully!");
                 model.addAttribute("adminDto", adminDto);
-                redirectAttributes.addFlashAttribute("message", "Register successfully!");
+
             }else {
                 model.addAttribute("adminDto", adminDto);
-                redirectAttributes.addFlashAttribute("message","Password ís not same!");
+                session.setAttribute("message","Password is not name!");
                 System.out.println("password not same");
-                return "redirect:/register";
+                return "register";
             }
 
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message", "Can not register because arror server!");
+            e.printStackTrace();
+            session.setAttribute("message","Server is error, please try again later!");
         }
 
         return "register";
