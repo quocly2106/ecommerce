@@ -18,16 +18,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class AdminConfiguration {
 
-
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService(){
         return new AdminServiceConfig();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,16 +49,14 @@ public class AdminConfiguration {
                                 .anyRequest().authenticated()
 
                 )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
+                .formLogin(login ->
+                        login.loginPage("/login")
                                 .loginProcessingUrl("/do-login")
                                 .defaultSuccessUrl("/index", true)
                                 .permitAll()
                 )
                 .logout(logout ->
-                        logout
-                                .invalidateHttpSession(true)
+                        logout.invalidateHttpSession(true)
                                 .clearAuthentication(true)
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/login?logout")
@@ -68,6 +66,7 @@ public class AdminConfiguration {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 );
+
         return http.build();
     }
 
