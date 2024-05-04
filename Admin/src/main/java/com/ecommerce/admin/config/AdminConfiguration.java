@@ -68,8 +68,6 @@ public class AdminConfiguration {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 );
-
-
         return http.build();
     }
 
