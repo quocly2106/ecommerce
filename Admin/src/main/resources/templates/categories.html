@@ -43,9 +43,12 @@
                         <th scope="row" th:text="${category.id}"></th>
                         <td th:text="${category.name}"></td>
                         <td>
-                            <a id="editButton" th:href="@{/getById/(id = ${category.id})}" class="btn btn-primary">Update</a>
+                            <a id="editButton" th:href="@{/findById(id=${category.id})}" class="btn btn-primary">Update</a>
                         </td>
-                        <td></td>
+                        <td>
+                            <a th:if="${category.is_activated()} == true" th:href="@{/delete-category/(id=${category.id})}" class="btn btn-warning">Deleted</a>
+                            <a th:if="${category.is_activated()} == false" th:href="@{/enable-category/(id=${category.id})}" class="btn btn-primary">Enabled</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -94,7 +97,7 @@
 <!-- End-->
 <!--Change Name category Modal-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalExample" aria-hidden="true">
-    <form>
+    <form th:action="@{/update-category}" method="put" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -103,11 +106,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="idEdit" class="col-form-label">Id:</label>
-                        <input type="text" class="form-control"  id="idEdit" name="idEdit">
+                        <input type="text" class="form-control"  id="idEdit" name="id" readonly>
                     </div>
                     <div class="form-group">
                         <label for="nameEdit" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control"  id="nameEdit" name="nameEdit">
+                        <input type="text" class="form-control"  id="nameEdit" name="name">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -119,10 +122,9 @@
     </form>
 </div>
 <!-- Bootstrap core JavaScript-->
-<div th:replace="~{fragments :: script}">
+<div th:replace="~{fragments :: script}"></div>
 
-</div>
-
+<script th:src="@{/js/categories.js}"></script>
 </body>
 
 </html>

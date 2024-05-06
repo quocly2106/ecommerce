@@ -3,6 +3,7 @@ package com.ecommerce.admin.controller;
 import com.ecommerce.library.model.Category;
 import com.ecommerce.library.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,10 +51,49 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/getById", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/findById", method = {RequestMethod.PUT, RequestMethod.GET})
     @ResponseBody
-    public Category getById(Long id) {
-        return categoryService.getById(id);
+    public Category findById(@RequestParam Long id) {
+        return categoryService.findById(id);
+    }
+
+    @GetMapping("/update-category")
+    public String update(Category category, RedirectAttributes attributes) {
+        try {
+            categoryService.update(category);
+            attributes.addFlashAttribute("success", "Update successfully");
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            attributes.addFlashAttribute("failed", "Failed to update because duplicate name");
+        } catch (Exception e) {
+            e.printStackTrace();
+            attributes.addFlashAttribute("failed", "Error server");
+        }
+        return "redirect:/categories";
+    }
+
+    @RequestMapping(value = "/delete-category", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String delete(@RequestParam Long id, RedirectAttributes attributes){
+        try {
+            categoryService.deleteById(id);
+            attributes.addFlashAttribute("success", "Deleted successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            attributes.addFlashAttribute("failed", "Failed to deleted");
+        }
+        return "redirect:/categories";
+    }
+    @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enable(@RequestParam Long id , RedirectAttributes attributes) {
+        try{
+            categoryService.enabledById(id);
+            attributes.addFlashAttribute("success","Enabled successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            attributes.addFlashAttribute("failed","Failed to enabled");
+        }
+        return "redirect:/categories";
     }
 
 }
+

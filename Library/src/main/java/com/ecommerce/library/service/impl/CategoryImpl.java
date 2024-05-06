@@ -29,16 +29,21 @@ public class CategoryImpl implements CategoryService {
     }
 
     @Override
-    public Category getById(Long id) {
-        return repo.getById(id);
+    public Category findById(Long id) {
+        return repo.findById(id).get();
     }
 
     @Override
     public Category update(Category catelogy) {
-        Category categoryUpdate = new Category();
-        categoryUpdate.setName(catelogy.getName());
-        categoryUpdate.set_activated(categoryUpdate.is_activated());
-        categoryUpdate.set_deleted(categoryUpdate.is_deleted());
+        Category categoryUpdate = null;
+        try {
+            categoryUpdate = repo.findById(catelogy.getId()).get();
+            categoryUpdate.setName(catelogy.getName());
+            categoryUpdate.set_activated(categoryUpdate.is_activated());
+            categoryUpdate.set_deleted(categoryUpdate.is_deleted());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return repo.save((categoryUpdate));
     }
 
