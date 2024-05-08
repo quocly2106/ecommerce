@@ -34,11 +34,11 @@ public class CategoryImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Category catelogy) {
+    public Category update(Category category) {
         Category categoryUpdate = null;
         try {
-            categoryUpdate = repo.findById(catelogy.getId()).get();
-            categoryUpdate.setName(catelogy.getName());
+            categoryUpdate = repo.findById(category.getId()).get();
+            categoryUpdate.setName(category.getName());
             categoryUpdate.set_activated(categoryUpdate.is_activated());
             categoryUpdate.set_deleted(categoryUpdate.is_deleted());
         }catch (Exception e){
@@ -50,13 +50,13 @@ public class CategoryImpl implements CategoryService {
     @Override
     public void deleteById(Long id) {
         Category category = repo.getById(id);
-        category.set_deleted(true);
         category.set_activated(false);
+        category.set_deleted(true);
         repo.save(category);
     }
 
     @Override
-    public void enabledById(Long id) {
+    public void enableById(Long id) {
         Category category = repo.getById(id);
         category.set_activated(true);
         category.set_deleted(false);

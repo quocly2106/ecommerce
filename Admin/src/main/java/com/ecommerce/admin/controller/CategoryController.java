@@ -72,25 +72,32 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/delete-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String delete(@RequestParam Long id, RedirectAttributes attributes){
+    @RequestMapping(value = "/delete-category", method = {RequestMethod.GET, RequestMethod.PUT})
+    public String delete(Long id, RedirectAttributes redirectAttributes) {
         try {
             categoryService.deleteById(id);
-            attributes.addFlashAttribute("success", "Deleted successfully");
-        }catch (Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Failed to deleted");
+            redirectAttributes.addFlashAttribute("success", "Deleted successfully!");
+        } catch (DataIntegrityViolationException e1) {
+            e1.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Duplicate name of category, please check again!");
+        } catch (Exception e2) {
+            e2.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Error server");
         }
         return "redirect:/categories";
     }
+
     @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enable(@RequestParam Long id , RedirectAttributes attributes) {
-        try{
-            categoryService.enabledById(id);
-            attributes.addFlashAttribute("success","Enabled successfully");
-        }catch (Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed","Failed to enabled");
+    public String enable(Long id, RedirectAttributes redirectAttributes) {
+        try {
+            categoryService.enableById(id);
+            redirectAttributes.addFlashAttribute("success", "Enable successfully");
+        } catch (DataIntegrityViolationException e1) {
+            e1.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Duplicate name of category, please check again!");
+        } catch (Exception e2) {
+            e2.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Error server");
         }
         return "redirect:/categories";
     }
