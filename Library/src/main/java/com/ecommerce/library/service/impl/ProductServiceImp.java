@@ -4,16 +4,22 @@ import com.ecommerce.library.dto.ProductDto;
 import com.ecommerce.library.model.Product;
 import com.ecommerce.library.repository.ProductRepository;
 import com.ecommerce.library.service.ProductService;
+import com.ecommerce.library.utils.ImageUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
 public class ProductServiceImp implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ImageUpload imageUpload;
 
     @Override
     public List<ProductDto> findAll() {
@@ -31,13 +37,35 @@ public class ProductServiceImp implements ProductService {
             productDto.setImage(product.getImage());
             productDto.setActivated(product.is_activated());
             productDto.setDeleted(product.is_deleted());
+            productDtoList.add(productDto);
         }
         return productDtoList;
     }
 
     @Override
-    public Product save(ProductDto productDto) {
-        return null;
+    public Product save(MultipartFile imageProduct,ProductDto productDto) {
+        try {
+            Product product = new Product();
+            if (imageProduct == null){
+                product.setImage(null);
+            }else{
+                if(imageUpload.uploadImage(imageProduct)){
+                    System.out.println("Upload successfully");
+                }
+                product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
+            }
+            product.setName(productDto.getName());
+            product.setDescription(productDto.getDescription());
+            product.setCatelogy(productDto.getCategory());
+            product.setCostPrice(productDto.getCostPrice());
+            product.setCurrentQuantity(productDto.getCurrentQuantity());
+            product.set_activated(true);
+            product.set_deleted(false);
+            return productRepository.save(product);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
