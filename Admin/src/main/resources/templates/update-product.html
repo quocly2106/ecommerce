@@ -19,7 +19,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <!-- Page Heading -->
-                <form class="form-horizontal" th:action="@{/update-product}" method="post" enctype="multipart/form-data" th:object="${product}">
+                <form class="form-horizontal" th:action="@{/update-product/{id} (id = ${productDto.id})}" method="post" enctype="multipart/form-data" th:object="${productDto}">
                     <fieldset>
                         <!-- Form Name -->
                         <legend>ADD PRODUCTS</legend>
@@ -76,10 +76,20 @@
 
                         <!-- Text input-->
                         <div class="form-group">
+                            <label class="col-md-4 control-label" for="sale">SALE PRICE</label>
+                            <div class="col-md-4">
+                                <input id="sale" th:field="*{salePrice}" name="sale" class="form-control input-md" required="" type="text">
+
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
                             <div class="col-md-4">
                                 <!-- File Button -->
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label" for="imageProduct">image Product</label>
+                                    <label class="col-md-4 control-label" for="imageProduct">Image Product</label>
+                                    <img style="height: 40px; width: 40px;" th:src="'data:image/jpeg;base64,' + ${image}">
                                     <div class="col-md-4">
                                         <input id="imageProduct" name="imageProduct" class="input-file" type="file">
                                     </div>

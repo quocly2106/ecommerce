@@ -69,9 +69,30 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product update(ProductDto productDto) {
-        Product product = productRepository.getById(productDto.getId());
-        return null;
+    public Product update(MultipartFile imageProduct ,ProductDto productDto) {
+        try {
+            Product product = productRepository.getById(productDto.getId());
+            if (imageProduct == null){
+                product.setImage(product.getImage());
+            }else{
+                if (imageUpload.checkExisted(imageProduct) == false) {
+                    System.out.println("Upload to folder");
+                    //imageUpload.uploadImage(imageProduct);
+                }
+                System.out.println("Image existed");
+                product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
+            }
+            product.setName(productDto.getName());
+            product.setDescription(productDto.getDescription());
+            product.setSalePrice(productDto.getSalePrice());
+            product.setCostPrice(productDto.getCostPrice());
+            product.setCurrentQuantity(productDto.getCurrentQuantity());
+            product.setCatelogy(productDto.getCategory());
+            return productRepository.save(product);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -82,5 +103,22 @@ public class ProductServiceImp implements ProductService {
     @Override
     public void enableById(Long id) {
 
+    }
+
+    @Override
+    public ProductDto getById(Long id) {
+        Product product = productRepository.getById(id);
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setCurrentQuantity(product.getCurrentQuantity());
+        productDto.setCategory(product.getCatelogy());
+        productDto.setSalePrice(product.getSalePrice());
+        productDto.setCostPrice(product.getCostPrice());
+        productDto.setImage(product.getImage());
+        productDto.setDeleted(product.is_deleted());
+        productDto.setActivated(product.is_activated());
+        return productDto;
     }
 }

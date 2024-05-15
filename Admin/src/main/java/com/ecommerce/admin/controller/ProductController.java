@@ -60,7 +60,31 @@ public class ProductController {
     }
 
     @GetMapping("/update-product/{id}")
-    public String updateProductForm(@PathVariable("id") Long id, Model model){
+    public String updateProductForm(@PathVariable("id") Long id, Model model ,Principal principal){
+        if (principal == null){
+            return "redirect:/login";
+        }
+        model.addAttribute("title","Update products>");
+        List<Category> categories = categoryService.findAllByActivated();
+        ProductDto productDto = productService.getById(id);
+        model.addAttribute("categories", categories);
+        model.addAttribute("productDto",productDto);
         return "update-product";
+    }
+
+
+    @PostMapping("/update-product/{id}")
+    public String processUpdate(@PathVariable("id")Long id,
+                                @ModelAttribute("productDto") ProductDto productDto,
+                                @RequestParam("imageProduct")MultipartFile imageProduct,
+                                RedirectAttributes attributes){
+        try {
+            productService.update(imageProduct, productDto);
+            attributes.addFlashAttribute("success","Update Successfully!");
+        }catch (Exception e){
+            e.printStackTrace();
+            attributes.addFlashAttribute("error","Failed to update!");
+        }
+        return "redirect:/products";
     }
 }
