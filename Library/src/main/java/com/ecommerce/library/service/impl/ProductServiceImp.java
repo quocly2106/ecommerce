@@ -70,6 +70,7 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public Product update(ProductDto productDto) {
+        Product product = productRepository.getById(productDto.getId());
         return null;
     }
 
