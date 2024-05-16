@@ -91,7 +91,7 @@ public class CategoryController {
     public String enable(Long id, RedirectAttributes redirectAttributes) {
         try {
             categoryService.enableById(id);
-            redirectAttributes.addFlashAttribute("success", "Enable successfully");
+            redirectAttributes.addFlashAttribute("success", "Enabled successfully");
         } catch (DataIntegrityViolationException e1) {
             e1.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "Duplicate name of category, please check again!");

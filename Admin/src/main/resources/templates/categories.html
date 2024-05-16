@@ -47,9 +47,9 @@
                                class="btn btn-primary">Update</a>
                         </td>
                         <td>
-                            <a th:if="${category.is_activated} == true" th:href="@{/enable-category/(id=${category.id})}"
+                            <a th:if="${category.is_activated()} == true" th:href="@{/delete-category(id=${category.id})}"
                                class="btn btn-primary">Deleted</a>
-                            <a th:if="${category.is_activated} == false" th:href="@{/delete-category/(id=${category.id})}"
+                            <a th:if="${category.is_activated()} == false" th:href="@{/enable-category(id=${category.id})}"
                                class="btn btn-warning">Enabled</a>
                         </td>
                     </tr>
