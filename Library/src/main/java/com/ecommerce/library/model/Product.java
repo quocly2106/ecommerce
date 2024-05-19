@@ -25,7 +25,7 @@ public class Product {
     private String image;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id" , referencedColumnName = "category_id")
-    private Category catelogy;
+    private Category category;
     private boolean is_deleted;
     private boolean is_activated;
 }

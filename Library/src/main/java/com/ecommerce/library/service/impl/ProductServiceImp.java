@@ -6,12 +6,15 @@ import com.ecommerce.library.repository.ProductRepository;
 import com.ecommerce.library.service.ProductService;
 import com.ecommerce.library.utils.ImageUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -33,7 +36,7 @@ public class ProductServiceImp implements ProductService {
             productDto.setCostPrice(product.getCostPrice());
             productDto.setSalePrice(product.getSalePrice());
             productDto.setCurrentQuantity(product.getCurrentQuantity());
-            productDto.setCategory(product.getCatelogy());
+            productDto.setCategory(product.getCategory());
             productDto.setImage(product.getImage());
             productDto.setActivated(product.is_activated());
             productDto.setDeleted(product.is_deleted());
@@ -56,7 +59,7 @@ public class ProductServiceImp implements ProductService {
             }
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
-            product.setCatelogy(productDto.getCategory());
+            product.setCategory(productDto.getCategory());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
             product.set_activated(true);
@@ -87,7 +90,7 @@ public class ProductServiceImp implements ProductService {
             product.setSalePrice(productDto.getSalePrice());
             product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
-            product.setCatelogy(productDto.getCategory());
+            product.setCategory(productDto.getCategory());
             return productRepository.save(product);
         }catch (Exception e){
             e.printStackTrace();
@@ -119,12 +122,26 @@ public class ProductServiceImp implements ProductService {
         productDto.setName(product.getName());
         productDto.setDescription(product.getDescription());
         productDto.setCurrentQuantity(product.getCurrentQuantity());
-        productDto.setCategory(product.getCatelogy());
+        productDto.setCategory(product.getCategory());
         productDto.setSalePrice(product.getSalePrice());
         productDto.setCostPrice(product.getCostPrice());
         productDto.setImage(product.getImage());
         productDto.setDeleted(product.is_deleted());
         productDto.setActivated(product.is_activated());
         return productDto;
+    }
+
+    @Override
+    public Page<Product> pageProducts(int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Product> productPages = productRepository.pageProduct(pageable);
+        return productPages;
+    }
+
+    @Override
+    public Page<Product> searchProducts(int pageNo,String keyword) {
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Product> productPages = productRepository.searchProducts(pageable, keyword);
+        return productPages;
     }
 }
