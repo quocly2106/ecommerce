@@ -20,11 +20,12 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
-    private String usernName;
+    private String username;
     private String country;
     @Column(name = "phone_number")
     private String phoneNumber;
     private String address;
+    private String password;
     @Lob
     @Column(name = "image" ,columnDefinition = "MEDIUMBLOB")
     private String image;
