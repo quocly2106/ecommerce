@@ -89,7 +89,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error","Failed to add!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
     @GetMapping("/update-product/{id}")
@@ -97,9 +97,9 @@ public class ProductController {
         if (principal == null){
             return "redirect:/login";
         }
-        model.addAttribute("title","Update products>");
         List<Category> categories = categoryService.findAllByActivated();
         ProductDto productDto = productService.getById(id);
+        model.addAttribute("title","Update products>");
         model.addAttribute("categories", categories);
         model.addAttribute("productDto",productDto);
         return "update-product";
@@ -118,7 +118,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error","Failed to update!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
     @RequestMapping(value = "/enabled-product/{id}" , method = {RequestMethod.PUT , RequestMethod.GET})
@@ -130,7 +130,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error" , "Failed to enabled!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
     @RequestMapping(value = "/delete-product/{id}" , method = {RequestMethod.PUT , RequestMethod.GET})
@@ -142,6 +142,6 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error" , "Failed to enabled!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 }
