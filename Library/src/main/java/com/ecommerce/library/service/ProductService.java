@@ -21,4 +21,8 @@ public interface ProductService {
     /*Customer*/
     List<Product> getAllProducts();
     List<Product> listViewProducts();
+
+    Product getProductById(Long id);
+
+    List<Product> getRelatedProducts(Long categoryId);
 }
