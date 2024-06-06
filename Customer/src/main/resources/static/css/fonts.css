@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Dosis';
+    src: url('../webfonts/fa-brands-400.eot') format('eot'),
+    url('../webfonts/fa-brands-400.svg') format('svg'),
+    url('../webfonts/fa-brands-400.ttf') format('truetype'),
+    url('../webfonts/fa-brands-400.woff') format('woff'),
+    url('../webfonts/fa-brands-400.woff2') format('woff2'),
+    url('../webfonts/fa-regular-400.eot') format('eot'),
+    url('../webfonts/fa-regular-400.svg') format('svg'),
+    url('../webfonts/fa-regular-400.ttf') format('truetype'),
+    url('../webfonts/fa-regular-400.woff') format('woff'),
+    url('../webfonts/fa-regular-400.woff2') format('woff2'),
+    url('../webfonts/fa-solid-900.eot') format('eot'),
+    url('../webfonts/fa-solid-900.svg') format('svg'),
+    url('../webfonts/fa-solid-900.ttf') format('truetype'),
+    url('../webfonts/fa-solid-900.woff') format('woff'),
+    url('../webfonts/fa-solid-900.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+
+}

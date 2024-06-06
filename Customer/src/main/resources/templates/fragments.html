@@ -24,6 +24,7 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/custom.css}">
+
 </head>
 <body>
 <!-- Start Main Top -->
@@ -43,41 +44,21 @@
                 <div class="login-box">
                     <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
                         <option>Authentication</option>
-                        <option
-                                th:if="${session.username == null}" value="http://localhost:8889/shop/login">Sign In
-                        </option>
-                        <option
-                                th:if="${session.username == null}" value="http://localhost:8889/shop/register">Sign Up
-                        </option>
+                        <option value="http://localhost:8889/shop/login">Sign In</option>
+                        <option value="http://localhost:8889/shop/register">Sign Up</option>
                     </select>
                 </div>
                 <div class="text-slid-box">
                     <div id="offer-box" class="carouselTicker">
                         <ul class="offer-box">
-                            <li>
-                                <i class="fab fa-opencart"></i> Off 5% for new members
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> Freeship
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> Off upto 10%! Shop Now
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> Off 5% for new members
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> Freeship
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> Off 10%! Shop Now
-                            </li>
+                            <li><i class="fab fa-opencart"></i> Off 5% for new members</li>
+                            <li><i class="fab fa-opencart"></i> Freeship</li>
+                            <li><i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime</li>
+                            <li><i class="fab fa-opencart"></i> Off upto 10%! Shop Now</li>
+                            <li><i class="fab fa-opencart"></i> Off 5% for new members</li>
+                            <li><i class="fab fa-opencart"></i> Freeship</li>
+                            <li><i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime</li>
+                            <li><i class="fab fa-opencart"></i> Off 10%! Shop Now</li>
                         </ul>
                     </div>
                 </div>
@@ -223,23 +204,20 @@
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}"
-                                          alt=""/></a>
+                <a href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}" alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}"
-                                          alt=""/></a>
+                <a href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}" alt=""/></a>
             </div>
         </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img
-                        th:src="@{/images/Octopus 06 - Red Wine – Braised Baby Octopus with Black Olives.jpg}"
-                        alt=""/></a>
-            </div>
-        </div>
+
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Octopus 06 - Red Wine – Braised Baby Octopus with Black Olives.jpg}" alt=""/></a>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 <!-- End Feed  -->
@@ -303,7 +281,6 @@
     <script th:src="@{/js/form-validator.min.js}"></script>
     <script th:src="@{/js/contact-form-script.js}"></script>
     <script th:src="@{/js/custom.js}"></script>
-
 </div>
 </body>
 </html>

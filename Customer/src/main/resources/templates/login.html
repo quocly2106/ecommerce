@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <!-- Basic -->
+
 <head th:replace="~{fragments::head}">
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{path/to/your/custom.css}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 
 <body>
 <!-- Start Main Top -->
-<div th:replace="~{fragments::main-top}">
-
-</div>
+<div th:replace="~{fragments::main-top}"></div>
 <!-- End Main Top -->
 
 <!-- Start Main Top -->
-<header th:replace="~{fragments::main-header}">
-</header>
+<header th:replace="~{fragments::main-header}"></header>
 <!-- End Main Top -->
 
 <!-- Start Top Search -->
@@ -21,50 +22,87 @@
 </div>
 <!-- End Top Search -->
 
-<section id="login-form">
-    <div class="noi-dung">
-        <div class="form">
-            <h2>Log In</h2>
-            <div th:if="${param.error}" class="alert alert-danger text-center">
-                Invalid username or password
-            </div>
-            <div th:if="${param.logout}" class="alert alert-success text-center">
-                You have been logged out!
-            </div>
-            <form th:action="@{/do-login}" method="post">
-                <div class="input-form">
-                    <input type="text" placeholder="Name" name="username" required>
-                </div>
-                <div class="input-form">
-                    <input type="password" placeholder="Password" name="password">
-                </div>
-                <div class="input-form">
-                    <input type="submit" value="Log In">
-                </div>
-                <div class="input-form">
-                    <p>Do You Already Have An Account ? <a th:href="@{/register}">Sign up now </a></p>
-                </div>
-            </form>
-            <h3>Log In With Social Network</h3>
-            <ul class="icon-dang-nhap">
-                <li><i class="fab fa-facebook-f"></i></i></li>
-                <li><i class="fab fa-google"></i></li>
-            </ul>
-        </div>
-    </div>
-</section>
 <!-- Start All Title Box -->
-<div th:replace="~{fragments :: instagram-box}">
+<div th:replace="~{fragments::instagram-box}">
 </div>
 <!-- End All Title Box -->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Log In</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="username">User Name</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                        <p class="text-center mt-3">Do You Already Have An Account? <a th:href="@{register}">Sign up
+                            now</a></p>
+                    </form>
+                    <h3 class="text-center mt-3">Log In With Social Network</h3>
+                    <div class="text-center">
+                        <a href="#" class="btn btn-primary m-1"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#" class="btn btn-danger m-1"><i class="fab fa-google"></i> Google</a>
+                        <a href="#" class="btn btn-warning m-1"><i class="fab fa-weibo"></i> Weibo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--    <section id="login-form">-->
+<!--        <div class="noi-dung">-->
+<!--            <div class="form">-->
+<!--                <h2>Log In</h2>-->
+<!--                <form action="">-->
+<!--                    <div class="input-form">-->
+<!--                        &lt;!&ndash; <span>User name</span> &ndash;&gt;-->
+<!--                        <input type="text" placeholder="Name" name="">-->
+<!--                    </div>-->
+<!--                    <div class="input-form">-->
+<!--                        &lt;!&ndash; <span>Password</span> &ndash;&gt;-->
+<!--                        <input type="password" placeholder="Password" name="">-->
+<!--                    </div>-->
+<!--                    <div class="Remember-me">-->
+<!--                        <label><input type="checkbox" name=""> Remember Me </label>-->
+<!--                    </div>-->
+<!--                    <div class="input-form">-->
+<!--                        <input type="submit" value="Log In">-->
+<!--                    </div>-->
+<!--                    <div class="input-form">-->
+<!--                        <p>Do You Already Have An Account ? <a href="Register.html">Sign up now  </a></p>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--                <h3>Log In With Social Network</h3>-->
+<!--                <ul class="icon-dang-nhap">-->
+<!--                    <li><i class="fab fa-facebook-f"></i></i></li>-->
+<!--                    <li><i class="fab fa-google"></i></li>-->
+<!--                    <li><i class="fab fa-weibo"></i></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
 <!-- Start copyright  -->
-<footer th:replace="~{fragments::footer}"></footer>
-<!-- End copyright  -->
 
 <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+<footer th:replace="~{fragments::footer}"></footer>
 
 <!-- ALL JS FILES -->
 <div th:replace="~{fragments::script}"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

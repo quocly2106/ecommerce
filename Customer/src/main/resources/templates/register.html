@@ -1,67 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head th:replace="~{fragments::head}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{path/to/your/custom.css}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
-
 <body>
 <!-- Start Main Top -->
-<div th:replace="~{fragments::main-top}">
-
-</div>
+<div th:replace="~{fragments::main-top}"></div>
 <!-- End Main Top -->
 
 <!-- Start Main Top -->
-<header th:replace="~{fragments::main-header}" >
-</header>
+<header th:replace="~{fragments::main-header}"></header>
 <!-- End Main Top -->
 
 <!-- Start Top Search -->
-<div th:replace="~{fragments::top-search}">
-</div>
+<div th:replace="~{fragments::top-search}"></div>
 <!-- End Top Search -->
 
-<section id="register-form">
-    <div class="noi-dung">
-        <div class="form">
-            <h2>Register</h2>
-            <form action="">
-                <div class="input-form">
-                    <input type="text" placeholder="Name" name="">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-body text-center">
+                    <h2 class="card-title text-center">Register</h2>
+                    <div th:if="${error}" class="text-center alert-danger">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div th:if="${username}" class="text-center alert-warning">
+                        <p th:text="${username}"></p>
+                    </div>
+                    <div th:if="${password}" class="text-center alert-warning">
+                        <p th:text="${password}"></p>
+                    </div>
+                    <div th:if="${success}" class="text-center alert-success">
+                        <p th:text="${success}"></p>
+                    </div>
+
+                    <form th:action="@{/do-register}" method="post" th:object="${customerDto}">
+                        <div class="form-group">
+                            <input type="text" th:field="*{firstName}" class="form-control" placeholder="First Name">
+                        </div>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                             th:errors="*{firstName}"></div>
+                        <div class="form-group">
+                            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last Name">
+                        </div>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                             th:errors="*{lastName}"></div>
+                        <div class="form-group">
+                            <input type="email" th:field="*{username}" class="form-control" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}"
+                             th:errors="*{password}"></div>
+                        <div class="form-group">
+                            <input type="password" th:field="*{repeatPassword}" class="form-control"
+                                   placeholder="Verify password">
+                        </div>
+                        <div class="form-group">
+                            <p>Do You Already Have An Account? <a th:href="@{/login}">Sign in now</a></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-block" value="Sign up">
+                        </div>
+                    </form>
+                    <h3 class="text-center mt-3">Log In With Social Network</h3>
+                    <div class="text-center">
+                        <a href="#" class="btn btn-primary m-1"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#" class="btn btn-danger m-1"><i class="fab fa-google"></i> Google</a>
+                        <a href="#" class="btn btn-warning m-1"><i class="fab fa-weibo"></i> Weibo</a>
+                    </div>
                 </div>
-                <div class="input-form">
-                    <input type="password" placeholder="Password" name="">
-                </div>
-                <div class="input-form">
-                    <input type="password" placeholder="Verify password" name="">
-                </div>
-                <div class="input-form">
-                    <p>Do you already have an account ? <a href="login.html"> Sign in now </a></p>
-                </div>
-                <div class="input-form">
-                    <input type="submit" value="Sign up">
-                </div>
-            </form>
-            <h3>Login in with social network</h3>
-            <ul class="icon-dang-nhap">
-                <li><i class="fab fa-facebook-f"></i></li>
-                <li><i class="fab fa-google"></i></li>
-                <li><i class="fab fa-weibo"></i></li>
-            </ul>
+            </div>
         </div>
     </div>
-</section>
-<!-- Start All Title Box -->
-<div th:replace="~{fragments :: instagram-box}">
 </div>
-<!-- End All Title Box -->
-<!-- Start copyright  -->
-<footer th:replace="~{fragments::footer}"></footer>
-<!-- End copyright  -->
 
-<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
 <!-- ALL JS FILES -->
 <div th:replace="~{fragments::script}"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
