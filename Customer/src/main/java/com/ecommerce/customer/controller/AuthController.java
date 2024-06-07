@@ -5,6 +5,7 @@ import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,9 @@ public class AuthController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -43,10 +47,11 @@ public class AuthController {
                 model.addAttribute("username", "Username have been registered");
                 model.addAttribute("customerDto",customerDto);
             }
-            if (customerDto.getPassword().equals(customerDto.getRepeatPassword()) && customer == null ) {
-                CustomerDto customerDtoSave = customerService.save(customerDto);
+            if (customerDto.getPassword().equals(customerDto.getRepeatPassword())) {
+                customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+                customerService.save(customerDto);
                 model.addAttribute("success", "Register successfully");
-            }else if (!customerDto.getPassword().equals(customerDto.getRepeatPassword())){
+            }else{
                 model.addAttribute("password", "Password is not same");
                 model.addAttribute("customerDto", customerDto);
                 return "register";

@@ -43,8 +43,9 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
                     <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
-                        <option>Authentication</option>
-                        <option value="http://localhost:8889/shop/login">Sign In</option>
+                        <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
+                        <option th:if="${session.username == null}" value="http://localhost:8889/shop/login">Sign In</option>
+                        <option th:if="${session.username != null}" value="http://localhost:8889/shop/logout">Log out</option>
                         <option value="http://localhost:8889/shop/register">Sign Up</option>
                     </select>
                 </div>
@@ -108,7 +109,7 @@
                 <ul>
                     <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                     <li class="side-menu">
-                        <a href="#" th:href="@{/cart}">
+                        <a th:href="@{/cart}">
                             <i class="fa fa-shopping-bag"></i>
                             <span class="badge"
                                   th:text="${session.totalItems == null} ? '0' : ${session.totalItems}"></span>

@@ -51,6 +51,7 @@ public class CustomerConfiguration {
                         login.loginPage("/login")
                                 .loginProcessingUrl("/do-login")
                                 .defaultSuccessUrl("/index", true)
+                                .failureUrl("/login?error=true")
                                 .permitAll()
                 )
                 .logout(logout ->
