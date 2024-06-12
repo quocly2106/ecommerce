@@ -2,14 +2,14 @@ package com.ecommerce.library.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.Collection;
 import java.util.List;
 
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,16 +27,18 @@ public class Customer {
     private String username;
     private String country;
     @Column(name = "phone_number")
-    private String phoneNumber;
+    private String phoneNumber="";
+    public String getPhoneNumber() {
+        return (phoneNumber == null) ? "" : phoneNumber;
+    }
     private String address;
     private String password;
     @Lob
     @Column(name = "image" ,columnDefinition = "MEDIUMBLOB")
     private String image;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id" , referencedColumnName = "city_id")
-    private City city;
+    @Column(name = "city")
+    private String city;
 
     @OneToOne(mappedBy = "customer")
     private ShoppingCart shoppingCart;
@@ -48,4 +50,6 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id" , referencedColumnName = "role_id"))
     private Collection<Role> roles;
+
+
 }
